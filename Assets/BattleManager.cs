@@ -57,7 +57,7 @@ public class BattleManager : MonoBehaviour
                 break;
             case GAMESTATE.PLAYERTURN:
                 //player selects option
-                playerTurnChoice();
+                //playerTurnChoice();
                 break;
             case GAMESTATE.RUNNING:
             default:
@@ -70,11 +70,28 @@ public class BattleManager : MonoBehaviour
         //player turn
 
     }
-    public void playerTurnChoice(){
+    void OnGUI(){
+        switch (myState)
+        {
+            case GAMESTATE.PLAYERTURN:
+                if (GUI.Button(new Rect(10, 10, 50, 50), "Skill 1" )){
+                    playerTurnChoice(1);
+                }
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    public void playerTurnChoice(int _skill){
         if(myState != GAMESTATE.PLAYERTURN){
             return;
         }
-        Debug.Log("my turn");
+        //myState = GAMESTATE.RUNNING; // to allow for animations
+        //run monster skill _skill
+        Debug.Log("using skill!");
+        myState = GAMESTATE.TICKING;
     }   
     public void InitilizeCombatSW(){
         tick = 0;
