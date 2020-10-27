@@ -10,7 +10,7 @@ public class SlashRocks : Skill {
             TARGET.SINGLE,
             new double[6]{0.18,1,0,0,0,0}),
             new Dictionary<string, d_P>(){
-                ["defenseBreak"] = new d_P(2,0.4)  
+                ["defenseBreak"] = new d_P(2,0.4)                   //first two in DP represents the number of hits in the attack the second is the percent chance of landing the debuff
             };
     }
     public override void OnSkillStart(){
