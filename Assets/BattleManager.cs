@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public struct SkillInfo {
     public int[] targets;
@@ -17,11 +18,15 @@ public class BattleManager : MonoBehaviour
     public const double SPEEDPERCENT = 0.1;
     public Monster monOne; //probably need an array of player monster/team
     public Monster monTwo; //an array for the other team, maybe multi dimentional for scenerios 
+    public Monster hell;
 
     public Monster[] team;
 
     public enum GAMESTATE { PLAYERTURN, ENEMYTURN, TICKING, PAUSE, RUNNING }
     public GAMESTATE myState;
+
+    public Texture2D emptyProgressBar;
+    public Texture2D fullProgressBar;
 
     //private skillChoice chosenSkill = null;
 
@@ -34,10 +39,10 @@ public class BattleManager : MonoBehaviour
         monOne = new Monster(0, 10, "Bulbasaur", Type.Grass, Type.Grass, new Stats(45,49,49,65,65,45));
         monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new Stats(39,52,43,60,50,65));
 
-        Monster test = new FireHellhound();
+        hell = new FireHellhound();
         //test.Print();
 
-        team = new Monster[]{ monOne, monTwo, test };
+        team = new Monster[]{ monOne, monTwo, hell };
         //monOne.Print();
         //monTwo.Print();
         //friendlyTeam = new BattleData[1]{new BattleData(0)};
@@ -71,11 +76,21 @@ public class BattleManager : MonoBehaviour
 
     }
     void OnGUI(){
+        
+        double per = hell.attackBar.bar /100;
+        Debug.Log(per);
+        per *= Screen.width;
+        GUI.DrawTexture(new Rect(0, 70, Screen.width, 50), emptyProgressBar);
+        GUI.DrawTexture(new Rect(0, 80, (float)per, 30), fullProgressBar);
+        
         switch (myState)
         {
             case GAMESTATE.PLAYERTURN:
                 if (GUI.Button(new Rect(10, 10, 50, 50), "Skill 1" )){
                     playerTurnChoice(1);
+                }
+                if (GUI.Button(new Rect(70, 10, 50, 50), "Skill 2" )){
+                    playerTurnChoice(2);
                 }
                 break;
             default:
@@ -90,7 +105,9 @@ public class BattleManager : MonoBehaviour
         }
         //myState = GAMESTATE.RUNNING; // to allow for animations
         //run monster skill _skill
-        Debug.Log("using skill!");
+        Debug.Log($"using skill {_skill}!");
+        team[0].attackBar.Zero();
+
         myState = GAMESTATE.TICKING;
     }   
     public void InitilizeCombatSW(){
