@@ -43,7 +43,7 @@ public class Skill{
     public Skill(Monster _myself){
         myMonster = _myself;
         skillettes = new Skillette[1];
-        skillettes[0] = new Skillette(TARGET.SINGLE,new double[6]{0,1,0,0,0,0});
+        skillettes[0] = new Skillette(TARGET.SINGLE,new double[6]{0,1,0,0,0,0}, null);
     }
     public Skill(Monster _myself, Skillette[] _sk){
         myMonster = _myself;
