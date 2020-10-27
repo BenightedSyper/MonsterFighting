@@ -8,20 +8,31 @@ public enum TARGET { SINGLE, MULTI, RANDOM, SELF, ALLY, FRIENDLYTEAM } //"single
 public enum STAT { HEALTH, ATTACK, DEFENSE, SPATTACK, SPDEFENSE, SPEED }
 
 
-
 public struct SkilletteResponse {
     public int damageDone;
     public Monster target;
     public Dictionary<string, dynamic> flags;
 }
 
+public struct d_P{
+    public int duration;
+    public double percent;
+
+    public d_P(int _duration, double _percent){
+         duration = _duration;
+         percent = _percent;
+    }
+}
+
 public struct Skillette {
     public TARGET target;
     public double[] damageScaling;
+    public Dictionary<string, d_P> debuffs;
 
-    public Skillette(TARGET _target, double[] _dScale){
+   public Skillette(TARGET _target, double[] _dScale, Dictionary<string, double> debuffCalc){
         target = _target;
         damageScaling = _dScale;
+        debuffs =  debuffCalc;
     }
 }
 
@@ -40,6 +51,10 @@ public class Skill{
     }
 
     public virtual void OnSkillStart (/*this should probably have some information about the current match*/){
+
+    }
+
+    public virtual void OnSkillLand (/*this happpens after the attack but doesnt need any other arguments*/){
 
     }
 

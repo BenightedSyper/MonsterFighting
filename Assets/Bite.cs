@@ -6,10 +6,13 @@ using UnityEngine;
 public class Bite : Skill {
     public Bite(Monster _myself): base(_myself){
         skillettes = new Skillette[1];
-        skillettes[0] = new Skillette(TARGET.SINGLE,new double[6]{0,3.6,0,0,0,0});
+        skillettes[0] = new Skillette(TARGET.SINGLE,new double[6]{0,3.6,0,0,0,0}, null);
     }
     public override void OnSkillStart(){
         //nothing
+    }
+    public override void OnSkillLand(){
+
     }
     public override void OnSkillEnd (SkilletteResponse _sr){
         //gain 30% life from damage done
