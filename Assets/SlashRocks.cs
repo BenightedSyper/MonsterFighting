@@ -8,10 +8,10 @@ public class SlashRocks : Skill {
         skillettes = new Skillette[1];
         skillettes[0] = new Skillette(
             TARGET.SINGLE,
-            new double[6]{0.18,1,0,0,0,0}),
+            new double[6]{0.18,1,0,0,0,0},
             new Dictionary<string, d_P>(){
                 ["defenseBreak"] = new d_P(2,0.4)  
-            };
+            });
     }
     public override void OnSkillStart(){
         
@@ -19,7 +19,7 @@ public class SlashRocks : Skill {
     public override void OnSkillLand(){
 
     }
-    public override void OnSkillEnd(){
+    public override void OnSkillEnd(SkilletteResponse _sr){
 
     }
 }

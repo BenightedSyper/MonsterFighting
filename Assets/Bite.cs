@@ -14,7 +14,7 @@ public class Bite : Skill {
     public override void OnSkillLand(){
 
     }
-    public override void OnSkillEnd (SkilletteResponse _sr){
+    public override void OnSkillEnd(SkilletteResponse _sr){
         //gain 30% life from damage done
         dynamic dam;
         _sr.flags.TryGetValue("damageDealt", out dam);

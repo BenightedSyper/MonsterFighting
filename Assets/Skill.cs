@@ -29,7 +29,7 @@ public struct Skillette {
     public double[] damageScaling;
     public Dictionary<string, d_P> debuffs;
 
-   public Skillette(TARGET _target, double[] _dScale, Dictionary<string, double> debuffCalc){
+   public Skillette(TARGET _target, double[] _dScale, Dictionary<string, d_P> debuffCalc){
         target = _target;
         damageScaling = _dScale;
         debuffs =  debuffCalc;
