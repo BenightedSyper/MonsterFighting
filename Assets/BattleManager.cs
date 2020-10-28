@@ -28,6 +28,9 @@ public class BattleManager : MonoBehaviour
     public Texture2D emptyProgressBar;
     public Texture2D fullProgressBar;
 
+    public GameObject prefabMSM;
+    public GameObject hellhoundGO;
+
     //private skillChoice chosenSkill = null;
 
     private int tick;
@@ -41,6 +44,10 @@ public class BattleManager : MonoBehaviour
 
         hell = new FireHellhound();
         hell.SetPlayerID(1);
+        hellhoundGO = Instantiate(prefabMSM, new Vector3(0, 0, 0), Quaternion.identity);
+        MonsterStatusManager myMSM = hellhoundGO.GetComponent<MonsterStatusManager>();
+        myMSM.myMonster = hell;
+        
         //test.Print();
 
         team = new Monster[]{ monOne, monTwo, hell };
@@ -77,13 +84,13 @@ public class BattleManager : MonoBehaviour
 
     }
     void OnGUI(){
-        
+        /*
         double per = hell.attackBar.bar /100;
         //Debug.Log(per);
         per *= Screen.width;
         GUI.DrawTexture(new Rect(0, 70, Screen.width, 50), emptyProgressBar);
         GUI.DrawTexture(new Rect(0, 80, (float)per, 30), fullProgressBar);
-        
+        */
         switch (myState)
         {
             case GAMESTATE.PLAYERTURN:

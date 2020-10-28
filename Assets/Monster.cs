@@ -152,6 +152,12 @@ public class Monster
         Debug.Log("Current Level Stats: ");
         CurrentLevel.Print();
     }
+    public float GetPercentHealth(){
+        return 1f;
+    }
+    public float GetPercentAttackBar(){
+        return (float) this.attackBar.bar / 100f;
+    }
     public virtual int takeDamage (int _dam){
         CurrentLevel.Health -= 10;
         //if health below 0 set knocked out
