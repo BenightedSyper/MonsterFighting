@@ -40,6 +40,7 @@ public class BattleManager : MonoBehaviour
         monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new Stats(39,52,43,60,50,65));
 
         hell = new FireHellhound();
+        hell.SetPlayerID(1);
         //test.Print();
 
         team = new Monster[]{ monOne, monTwo, hell };
@@ -78,7 +79,7 @@ public class BattleManager : MonoBehaviour
     void OnGUI(){
         
         double per = hell.attackBar.bar /100;
-        Debug.Log(per);
+        //Debug.Log(per);
         per *= Screen.width;
         GUI.DrawTexture(new Rect(0, 70, Screen.width, 50), emptyProgressBar);
         GUI.DrawTexture(new Rect(0, 80, (float)per, 30), fullProgressBar);
@@ -87,10 +88,10 @@ public class BattleManager : MonoBehaviour
         {
             case GAMESTATE.PLAYERTURN:
                 if (GUI.Button(new Rect(10, 10, 50, 50), "Skill 1" )){
-                    playerTurnChoice(1);
+                    PlayerTurnChoice(1);
                 }
                 if (GUI.Button(new Rect(70, 10, 50, 50), "Skill 2" )){
-                    playerTurnChoice(2);
+                    PlayerTurnChoice(2);
                 }
                 break;
             default:
@@ -98,8 +99,15 @@ public class BattleManager : MonoBehaviour
         }
         
     }
-
-    public void playerTurnChoice(int _skill){
+    public void EnemyTurnChoice(Monster _mon){
+        if(myState != GAMESTATE.ENEMYTURN){
+            return;
+        }
+        //select a skill and a target for the enemy monster to use
+        _mon.attackBar.Zero();
+        myState = GAMESTATE.TICKING;
+    }
+    public void PlayerTurnChoice(int _skill){
         if(myState != GAMESTATE.PLAYERTURN){
             return;
         }
@@ -113,6 +121,13 @@ public class BattleManager : MonoBehaviour
     public void InitilizeCombatSW(){
         tick = 0;
         //calculate match bonuses/restrictions
+
+        /*
+        foreach (Monster mon in team){
+            mon.OnEnterBattle();
+        }
+        */
+
         //set attack bar to 0 for all monsters
         //monOne.attackBar.Zero();
         //monTwo.attackBar.Zero();
@@ -139,8 +154,18 @@ public class BattleManager : MonoBehaviour
         Array.Sort(team, new AttackBarComparer());
         //sort by atb and check if over 100
         if(team[0].attackBar.IsFull()){
+            Debug.Log($"{team[0].name}'s turn");
             //monster takes turn
-            myState = GAMESTATE.PLAYERTURN;
+            if(team[0].playerID == 1){
+                //playerID of the current player
+                myState = GAMESTATE.PLAYERTURN;
+            }else{
+                //enemies turn
+                //call monster AI to pick move
+                myState = GAMESTATE.ENEMYTURN;
+                EnemyTurnChoice(team[0]);
+            }
+            
         }
     }
 }

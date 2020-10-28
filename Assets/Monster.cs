@@ -78,7 +78,7 @@ public struct AttackBar{
 }
 public class Monster 
 {
-    private int playerID;
+    public int playerID;
     private int id;
     private int level = 1;
     public string name;
@@ -106,6 +106,7 @@ public class Monster
     }
 
     public Monster(int id, int level, string name, Type primary = default, Type secondary = default, Stats @base = default){
+        this.playerID = 0;
         this.id = id;
         this.level = level;
         this.name = name;
@@ -130,6 +131,9 @@ public class Monster
 
     private int BasedOnLevel(int _stat){
         return Mathf.CeilToInt( (2 * _stat) * level / 100) + 5;
+    }
+    public void SetPlayerID(int _id){
+        this.playerID = _id;
     }
     public float TickAttackBar(double _percent){
         //Take monster speed multiply it by tick percent
