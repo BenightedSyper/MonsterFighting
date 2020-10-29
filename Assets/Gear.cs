@@ -18,7 +18,16 @@ public int[4] gearLevelthree;
 public int[5] gearLevelfour;
 public int[6] gearLevelfive;
 
+RandomizeSubs(){
+
+}
+
+Randomize percentage(){
+
+}
+
 //thought is put all possable stats you can have in the srtuct since you can get every stat on every slot
+
 
 public struct Helmet{                           //replace slot 5
     public double health;
@@ -33,7 +42,7 @@ public struct Handtwo{
 }
 
 public struct Boots{
-
+    public int speed;
 }
 
 Public struct Shirt{
