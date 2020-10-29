@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//probably pull from enum STAT
+
 public Double subSlotone;
 public Double subSlottwo;
 public Double subSlotthree;
@@ -16,11 +18,30 @@ public int[4] gearLevelthree;
 public int[5] gearLevelfour;
 public int[6] gearLevelfive;
 
-
+//thought is put all possable stats you can have in the srtuct since you can get every stat on every slot
 
 public struct Helmet{                           //replace slot 5
+    public double health;
+}
+
+public struct Handone{
 
 }
 
+public struct Handtwo{
+
+}
+
+public struct Boots{
+
+}
+
+Public struct Shirt{
+
+}
+
+public struct Pants{
+
+}
 
 */
