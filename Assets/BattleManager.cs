@@ -31,6 +31,8 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabMSM;
     public GameObject hellhoundGO;
 
+    private int selectedSkill = 0;
+
     //private skillChoice chosenSkill = null;
 
     private int tick;
@@ -47,7 +49,7 @@ public class BattleManager : MonoBehaviour
         hellhoundGO = Instantiate(prefabMSM, new Vector3(0, 0, 0), Quaternion.identity);
         MonsterStatusManager myMSM = hellhoundGO.GetComponent<MonsterStatusManager>();
         myMSM.myMonster = hell;
-        
+
         //test.Print();
 
         team = new Monster[]{ monOne, monTwo, hell };
@@ -94,11 +96,23 @@ public class BattleManager : MonoBehaviour
         switch (myState)
         {
             case GAMESTATE.PLAYERTURN:
+                //team[0]'s skill sprites for the buttons
                 if (GUI.Button(new Rect(10, 10, 50, 50), "Skill 1" )){
-                    PlayerTurnChoice(1);
+                    selectedSkill = 1;
+                    //PlayerTurnChoice(1);
                 }
                 if (GUI.Button(new Rect(70, 10, 50, 50), "Skill 2" )){
-                    PlayerTurnChoice(2);
+                    selectedSkill = 2;
+                    //PlayerTurnChoice(2);
+                }
+                if ( Input.GetMouseButtonDown (0)){ 
+                    RaycastHit hit; 
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+                    if ( Physics.Raycast (ray,out hit,100.0f)) {
+                        Monster targetMonster = hit.transform.GetComponent<MonsterStatusManager>().myMonster;
+                        //PlayerTurnChoice();
+                        Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
+                    }
                 }
                 break;
             default:
