@@ -99,11 +99,11 @@ public class BattleManager : MonoBehaviour
                 //team[0]'s skill sprites for the buttons
                 if (GUI.Button(new Rect(10, 10, 50, 50), "Skill 1" )){
                     selectedSkill = 1;
-                    //PlayerTurnChoice(1);
+                    PlayerTurnChoice(1);
                 }
                 if (GUI.Button(new Rect(70, 10, 50, 50), "Skill 2" )){
                     selectedSkill = 2;
-                    //PlayerTurnChoice(2);
+                    PlayerTurnChoice(2);
                 }
                 if ( Input.GetMouseButtonDown (0)){ 
                     RaycastHit hit; 
