@@ -38,6 +38,8 @@ public class BattleManager : MonoBehaviour
     public Transform friendlySpawn1, friendlySpawn2, friendlySpawn3, friendlySpawn4;
     public Transform enemySpawn1, enemySpawn2, enemySpawn3, enemySpawn4;
 
+    public GameObject battleText;
+
     private int selectedSkill = 0;
 
     //private skillChoice chosenSkill = null;
@@ -126,7 +128,7 @@ public class BattleManager : MonoBehaviour
                     if ( Physics.Raycast (ray,out hit,100.0f)) {
                         if(hit.transform.tag == "Enemy"){
                             Monster targetMonster = hit.transform.GetComponent<MonsterStatusManager>().myMonster;
-                            PlayerTurnChoice(team[0], selectedSkill, targetMonster);
+                            PlayerTurnChoice(team[0], selectedSkill, targetMonster, hit.transform);
                         }
                         //Monster targetMonster = hit.transform.GetComponent<MonsterStatusManager>().myMonster;
                         //PlayerTurnChoice();
@@ -147,7 +149,7 @@ public class BattleManager : MonoBehaviour
         _mon.attackBar.Zero();
         myState = GAMESTATE.TICKING;
     }
-    public void PlayerTurnChoice(Monster _curr, int _skill, Monster _target){
+    public void PlayerTurnChoice(Monster _curr, int _skill, Monster _target, Transform _tragetTransform){
         if(myState != GAMESTATE.PLAYERTURN){
             return;
         }
@@ -159,9 +161,11 @@ public class BattleManager : MonoBehaviour
             }
             //check for critical strike
             //roll for debuff
-            _target.takeDamage(totalDamage);
+            int damageDone = _target.takeDamage(totalDamage);
             SkilletteResponse response = new SkilletteResponse();
-            response.damageDone = totalDamage;
+            response.damageDone = damageDone;
+            GameObject bText = Instantiate(battleText, _tragetTransform.position, Quaternion.identity);
+            bText.transform.GetChild(0).GetComponent<TextMesh>().text = damageDone.ToString();
             //add flags for debuffs landed or other events like KO'ing a monster
             //_res.flags
 
