@@ -61,10 +61,6 @@ public class Skill{
     public virtual void OnSkillEnd (SkilletteResponse _sr){
 
     }
-    public virtual void OnSkillEnd2(dynamic _var){
-
-    }
-
     public void Respond (SkilletteResponse _sr){
         Debug.Log("i dealt " + _sr.damageDone + " damage to " + _sr.target.name);
     }

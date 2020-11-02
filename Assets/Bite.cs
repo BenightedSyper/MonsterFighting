@@ -23,7 +23,4 @@ public class Bite : Skill {
         myMonster.gainHealth(gain);
         Debug.Log($"{myMonster.name} gains {gain} from Bite");
     }
-    public override void OnSkillEnd2(dynamic _var){
-        //int test = _var.flags["damageDealt"];
-    }
 }
