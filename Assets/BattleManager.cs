@@ -41,8 +41,8 @@ public class BattleManager : MonoBehaviour
     {
         myState = GAMESTATE.PAUSE;
         //create two monsters
-        monOne = new Monster(0, 10, "Bulbasaur", Type.Grass, Type.Grass, new Stats(45,49,49,65,65,45));
-        monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new Stats(39,52,43,60,50,65));
+        monOne = new Monster(0, 10, "Bulbasaur", Type.Grass, Type.Grass, new int[]{45,49,49,65,65,45});
+        monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new int[]{39,52,43,60,50,65});
 
         hell = new FireHellhound();
         hell.SetPlayerID(1);
@@ -99,17 +99,21 @@ public class BattleManager : MonoBehaviour
                 //team[0]'s skill sprites for the buttons
                 if (GUI.Button(new Rect(10, 10, 50, 50), "Skill 1" )){
                     selectedSkill = 1;
-                    PlayerTurnChoice(1);
+                    //PlayerTurnChoice(1);
                 }
                 if (GUI.Button(new Rect(70, 10, 50, 50), "Skill 2" )){
                     selectedSkill = 2;
-                    PlayerTurnChoice(2);
+                    //PlayerTurnChoice(2);
                 }
                 if ( Input.GetMouseButtonDown (0)){ 
                     RaycastHit hit; 
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
                     if ( Physics.Raycast (ray,out hit,100.0f)) {
-                        Monster targetMonster = hit.transform.GetComponent<MonsterStatusManager>().myMonster;
+                        if(hit.transform.tag == "Enemy"){
+                            Monster targetMonster = hit.transform.GetComponent<MonsterStatusManager>().myMonster;
+                            PlayerTurnChoice(team[0], selectedSkill, targetMonster);
+                        }
+                        //Monster targetMonster = hit.transform.GetComponent<MonsterStatusManager>().myMonster;
                         //PlayerTurnChoice();
                         Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
                     }
@@ -128,13 +132,32 @@ public class BattleManager : MonoBehaviour
         _mon.attackBar.Zero();
         myState = GAMESTATE.TICKING;
     }
-    public void PlayerTurnChoice(int _skill){
+    public void PlayerTurnChoice(Monster _curr, int _skill, Monster _target){
         if(myState != GAMESTATE.PLAYERTURN){
             return;
         }
+        Skill chosen = _curr.skills[_skill - 1];
+        foreach(Skillette _s in chosen.skillettes){
+            int totalDamage = 0;
+            for(int i = 0; i < 6; i++){
+                totalDamage += (int) (_curr.currentStats[i] * _s.damageScaling[i]);
+            }
+            //check for critical strike
+            //roll for debuff
+            _target.takeDamage(totalDamage);
+            SkilletteResponse response = new SkilletteResponse();
+            response.damageDone = totalDamage;
+            //add flags for debuffs landed or other events like KO'ing a monster
+            //_res.flags
+
+            chosen.OnSkillEnd(response);
+            
+        }
         //myState = GAMESTATE.RUNNING; // to allow for animations
         //run monster skill _skill
-        Debug.Log($"using skill {_skill}!");
+        //Debug.Log($"using skill {_skill}!");
+
+
         team[0].attackBar.Zero();
 
         myState = GAMESTATE.TICKING;

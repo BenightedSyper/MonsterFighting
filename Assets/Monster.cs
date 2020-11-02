@@ -8,62 +8,6 @@ public enum Type {
     Wind, 
     Grass
 }
-
-public struct Stats {
-    public int Health { get; set; }
-    public int Attack { get; set; }
-    public int Defense { get; set; }
-    public int SpAttack { get; set; }
-    public int SpDefense { get; set; }
-    public int Speed { get; set; }
-
-    public Stats(int _h = 100, int _a = 10, int _d = 10, int _sa = 10, int _sd = 10, int _s = 100){
-        Health = _h;
-        Attack = _a;
-        Defense = _d;
-        SpAttack = _sa;
-        SpDefense = _sd;
-        Speed = _s;
-    }
-    public void Print(){
-        Debug.Log($"HP: {Health}");
-        Debug.Log($"Attack: {Attack}");
-        Debug.Log($"Defense: {Defense}");
-        Debug.Log($"SpAttack: {SpAttack}");
-        Debug.Log($"SpDefense: {SpDefense}");
-        Debug.Log($"Speed: {Speed}");
-    }
-}
-public struct Modifiers {
-    public int FlatHealth { get; set; }
-    public int FlatAttack { get; set; }
-    public int FlatDefense { get; set; }
-    public int FlatSpAttack { get; set; }
-    public int FlatSpDefense { get; set; }
-    public int FlatSpeed { get; set; }
-    public int PercentHealth { get; set; }
-    public int PercentAttack { get; set; }
-    public int PercentDefense { get; set; }
-    public int PercentSpAttack { get; set; }
-    public int PercentSpDefense { get; set; }
-    public int PercentSpeed { get; set; }
-
-    public Modifiers(int _fh = 0, int _fa = 0, int _fd = 0, int _fsa = 0, int _fsd = 0, int _fs = 0, 
-                     int _ph = 1, int _pa = 1, int _pd = 1, int _psa = 1, int _psd = 1, int _ps = 1){
-        FlatHealth = _fh;
-        FlatAttack = _fa;
-        FlatDefense = _fd;
-        FlatSpAttack = _fsa;
-        FlatSpDefense = _fsd;
-        FlatSpeed = _fs;
-        PercentHealth = _ph;
-        PercentAttack = _pa;
-        PercentDefense = _pd;
-        PercentSpAttack = _psa;
-        PercentSpDefense = _psd;
-        PercentSpeed = _ps;
-    }
-}
 public struct AttackBar{
     public double bar { get; set; }
     public void Increase(double _val){
@@ -84,49 +28,262 @@ public class Monster
     public string name;
     private Type primary = Type.Fire;
     private Type secondary = Type.Fire;
-    public Stats Base;
-    public Modifiers Equipment;
-    public Stats CurrentLevel;
+
     public AttackBar attackBar;
 
-    public Skill skill1;
-    
+    public int[] baseStats;
+    public int[] levelStats;
+    public int[] runedStats;
+    public int[] matchStats;
+    public int[] currentStats;
+    public Skill[] skills;
+
+    public int baseHealth {
+        get{
+            return baseStats[0];
+        }
+        //set{ baseStats[0] = value; } i don't think the set methods need to be here
+    }
+    public int baseAttack {
+        get{
+            return baseStats[1];
+        }
+        //set{ baseStats[1] = value; }
+    }
+    public int baseDefense {
+        get{
+            return baseStats[2];
+        }
+        //set{ baseStats[2] = value; }
+    }
+    public int baseSpAttack {
+        get{
+            return baseStats[3];
+        }
+        //set{ baseStats[3] = value; }
+    }
+    public int baseSpDefense {
+        get{
+            return baseStats[4];
+        }
+        //set{ baseStats[4] = value; }
+    }
+    public int baseSpeed {
+        get{
+            return baseStats[5];
+        }
+        //set{ baseStats[5] = value; }
+    }
+
+    public int levelHealth {
+        get{
+            return levelStats[0];
+        }
+        //set{ levelStats[0] = value; }
+    }
+    public int levelAttack {
+        get{
+            return levelStats[1];
+        }
+        //set{ levelStats[1] = value; }
+    }
+    public int levelDefense {
+        get{
+            return levelStats[2];
+        }
+        //set{ levelStats[2] = value; }
+    }
+    public int levelSpAttack {
+        get{
+            return levelStats[3];
+        }
+        //set{ levelStats[3] = value; }
+    }
+    public int levelSpDefense {
+        get{
+            return levelStats[4];
+        }
+        //set{ levelStats[4] = value; }
+    }
+    public int levelSpeed {
+        get{
+            return levelStats[5];
+        }
+        //set{ levelStats[5] = value; }
+    }
+
+    public int runedHealth {
+        get{
+            return runedStats[0];
+        }
+        //set{ runedStats[0] = value; }
+    }
+    public int runedAttack {
+        get{
+            return runedStats[1];
+        }
+        //set{ runedStats[1] = value; }
+    }
+    public int runedDefense {
+        get{
+            return runedStats[2];
+        }
+        //set{ runedStats[2] = value; }
+    }
+    public int runedSpAttack {
+        get{
+            return runedStats[3];
+        }
+        //set{ runedStats[3] = value; }
+    }
+    public int runedSpDefense {
+        get{
+            return runedStats[4];
+        }
+        //set{ runedStats[4] = value; }
+    }
+    public int runedSpeed {
+        get{
+            return runedStats[5];
+        }
+        //set{ runedStats[5] = value; }
+    }
+
+
+    public int matchHealth {
+        get{
+            return matchStats[0];
+        }
+        //set{ matchStats[0] = value; }
+    }
+    public int matchAttack {
+        get{
+            return matchStats[1];
+        }
+        //set{ matchStats[1] = value; }
+    }
+    public int matchDefense {
+        get{
+            return matchStats[2];
+        }
+        //set{ matchStats[2] = value; }
+    }
+    public int matchSpAttack {
+        get{
+            return matchStats[3];
+        }
+        //set{ matchStats[3] = value; }
+    }
+    public int matchSpDefense {
+        get{
+            return matchStats[4];
+        }
+        //set{ matchStats[4] = value; }
+    }
+    public int matchSpeed {
+        get{
+            return matchStats[5];
+        }
+        //set{ matchStats[5] = value; }
+    }
+
+    public int currentHealth {
+        get{
+            return currentStats[0];
+        }
+        set{ 
+            currentStats[0] = value; 
+        }
+    }
+    public int currentAttack {
+        get{
+            return currentStats[1];
+        }
+        set{ 
+            currentStats[1] = value; 
+        }
+    }
+    public int currentDefense {
+        get{
+            return currentStats[2];
+        }
+        set{ 
+            currentStats[2] = value; 
+        }
+    }
+    public int currentSpAttack {
+        get{
+            return currentStats[3];
+        }
+        set{ 
+            currentStats[3] = value; 
+        }
+    }
+    public int currentSpDefense {
+        get{
+            return currentStats[4];
+        }
+        set{ 
+            currentStats[4] = value; 
+        }
+    }
+    public int currentSpeed {
+        get{
+            return currentStats[5];
+        }
+        set{ 
+            currentStats[5] = value; 
+        }
+    }
+
+
     public Monster(){
         playerID = 0;
         name = "DEFAULT";
         level = 1;
         primary = Type.Fire;
         secondary = Type.Fire;
-        Base = new Stats();
-        Equipment = new Modifiers();
-        CurrentLevel = new Stats();
+        //Base = new Stats();
+        baseStats = new int[]{0,0,0,0,0,0};
+        levelStats = new int[]{0,0,0,0,0,0};
+        runedStats = new int[]{0,0,0,0,0,0};
+        matchStats = new int[]{0,0,0,0,0,0};
+        currentStats = new int[]{0,0,0,0,0,0};
+
+        //Equipment = new Modifiers();
+        //CurrentLevel = new Stats();
         CalculateCurrentLevelStats();
         attackBar = new AttackBar();
-        skill1 = new Skill(this);
+        skills = new Skill[4]{null, null, null, null};
     }
 
-    public Monster(int id, int level, string name, Type primary = default, Type secondary = default, Stats @base = default){
+    public Monster(int id, int level, string name, Type primary, Type secondary, int[] _base){
         this.playerID = 0;
         this.id = id;
         this.level = level;
         this.name = name;
         this.primary = primary;
         this.secondary = secondary;
-        Base = @base;
-        CurrentLevel = new Stats();
+        baseStats = _base;
+        levelStats = new int[]{0,0,0,0,0,0};
+        runedStats = new int[]{0,0,0,0,0,0};
+        matchStats = new int[]{0,0,0,0,0,0};
+        currentStats = new int[]{0,0,0,0,0,0};
+        
+        //CurrentLevel = new Stats();
         CalculateCurrentLevelStats();
         attackBar = new AttackBar();
-        skill1 = new Skill(this);
+        skills = new Skill[4]{null, null, null, null};
     }
 
     private void CalculateCurrentLevelStats(){
-        CurrentLevel.Health = BasedOnLevel(Base.Health);
-        CurrentLevel.Health += level + 5;
-        CurrentLevel.Attack = BasedOnLevel(Base.Attack);
-        CurrentLevel.Defense = BasedOnLevel(Base.Defense);
-        CurrentLevel.SpAttack = BasedOnLevel(Base.SpAttack);
-        CurrentLevel.SpDefense = BasedOnLevel(Base.SpDefense);
-        CurrentLevel.Speed = BasedOnLevel(Base.Speed); //if not max level, you get fucked
+        levelStats[0] = BasedOnLevel(baseHealth);
+        levelStats[0] += level + 5;
+        levelStats[1] = BasedOnLevel(baseAttack);
+        levelStats[2] = BasedOnLevel(baseDefense);
+        levelStats[3] = BasedOnLevel(baseSpAttack);
+        levelStats[4] = BasedOnLevel(baseSpDefense);
+        levelStats[5] = BasedOnLevel(baseSpeed); //if not max level, you get fucked
     }
 
     private int BasedOnLevel(int _stat){
@@ -137,7 +294,7 @@ public class Monster
     }
     public float TickAttackBar(double _percent){
         //Take monster speed multiply it by tick percent
-        attackBar.Increase(_percent * CurrentLevel.Speed);
+        attackBar.Increase(_percent * levelSpeed);
         return 0;
     }
 
@@ -148,9 +305,9 @@ public class Monster
         Debug.Log($"Level: {level}");
         Debug.Log($"Type: {primary} / {secondary}");
         Debug.Log("Base stats: ");
-        Base.Print();
+        //Base.Print();
         Debug.Log("Current Level Stats: ");
-        CurrentLevel.Print();
+        //CurrentLevel.Print();
     }
     public float GetPercentHealth(){
         return 1f;
@@ -158,14 +315,14 @@ public class Monster
     public float GetPercentAttackBar(){
         return (float) this.attackBar.bar / 100f;
     }
-    public virtual int takeDamage (int _dam){
-        CurrentLevel.Health -= 10;
+    public virtual int takeDamage (int _dam){ // probably needs to send a skillresponse back
+        currentHealth -= _dam;
         //if health below 0 set knocked out
-        Debug.Log($"{name}: " + CurrentLevel.Health);
-        return 10;
+        //Debug.Log($"{name}: " + currentHealth);
+        return _dam;
     }
     public virtual int gainHealth (int _val){
-        CurrentLevel.Health += _val;
+        currentHealth += _val;
         return _val;
     }
 

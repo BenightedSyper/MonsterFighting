@@ -8,9 +8,9 @@ public class SlashRocks : Skill {
         skillettes = new Skillette[1];
         skillettes[0] = new Skillette(
             TARGET.SINGLE,
-            new double[6]{0.18,1,0,0,0,0},
+            new float[6]{0.18f,1,0,0,0,0},
             new Dictionary<string, d_P>(){
-                ["defenseBreak"] = new d_P(2,0.4)  
+                ["defenseBreak"] = new d_P(2,0.4f)  
             });
     }
     public override void OnSkillStart(){
