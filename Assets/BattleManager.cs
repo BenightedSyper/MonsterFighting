@@ -19,8 +19,11 @@ public class BattleManager : MonoBehaviour
     public Monster monOne; //probably need an array of player monster/team
     public Monster monTwo; //an array for the other team, maybe multi dimentional for scenerios 
     public Monster hell;
+    public Monster vaga;
 
     public Monster[] team;
+    public Monster[] friendlyMonsters;
+    public Monster[] enemyMonsters;
 
     public enum GAMESTATE { PLAYERTURN, ENEMYTURN, TICKING, PAUSE, RUNNING }
     public GAMESTATE myState;
@@ -30,6 +33,10 @@ public class BattleManager : MonoBehaviour
 
     public GameObject prefabMSM;
     public GameObject hellhoundGO;
+    public GameObject vagaGO;
+
+    public Transform friendlySpawn1, friendlySpawn2, friendlySpawn3, friendlySpawn4;
+    public Transform enemySpawn1, enemySpawn2, enemySpawn3, enemySpawn4;
 
     private int selectedSkill = 0;
 
@@ -41,18 +48,26 @@ public class BattleManager : MonoBehaviour
     {
         myState = GAMESTATE.PAUSE;
         //create two monsters
-        monOne = new Monster(0, 10, "Bulbasaur", Type.Grass, Type.Grass, new int[]{45,49,49,65,65,45});
-        monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new int[]{39,52,43,60,50,65});
+        //monOne = new Monster(0, 10, "Bulbasaur", Type.Grass, Type.Grass, new int[]{45,49,49,65,65,45});
+        //monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new int[]{39,52,43,60,50,65});
 
         hell = new FireHellhound();
         hell.SetPlayerID(1);
-        hellhoundGO = Instantiate(prefabMSM, new Vector3(0, 0, 0), Quaternion.identity);
+        hellhoundGO = Instantiate(prefabMSM, friendlySpawn1.position, Quaternion.identity);
         MonsterStatusManager myMSM = hellhoundGO.GetComponent<MonsterStatusManager>();
         myMSM.myMonster = hell;
+        friendlyMonsters = new Monster[1]{ hell };
+
+        vaga = new Vagabond();
+        vagaGO = Instantiate(prefabMSM, enemySpawn1.position ,Quaternion.identity);
+        MonsterStatusManager vagaMSM = vagaGO.GetComponent<MonsterStatusManager>();
+        vagaMSM.myMonster = vaga;
+        enemyMonsters = new Monster[1]{vaga};
 
         //test.Print();
 
-        team = new Monster[]{ monOne, monTwo, hell };
+        team = new Monster[2]{ hell, vaga };
+        
         //monOne.Print();
         //monTwo.Print();
         //friendlyTeam = new BattleData[1]{new BattleData(0)};

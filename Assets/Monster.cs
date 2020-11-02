@@ -284,6 +284,12 @@ public class Monster
         levelStats[3] = BasedOnLevel(baseSpAttack);
         levelStats[4] = BasedOnLevel(baseSpDefense);
         levelStats[5] = BasedOnLevel(baseSpeed); //if not max level, you get fucked
+
+        for(int i = 0; i < levelStats.Length; i++){
+            runedStats[i] = levelStats[i];
+            matchStats[i] = levelStats[i];
+            currentStats[i] = levelStats[i];
+        }
     }
 
     private int BasedOnLevel(int _stat){
@@ -310,7 +316,7 @@ public class Monster
         //CurrentLevel.Print();
     }
     public float GetPercentHealth(){
-        return 1f;
+        return (float) currentHealth / (float) matchHealth;
     }
     public float GetPercentAttackBar(){
         return (float) this.attackBar.bar / 100f;
