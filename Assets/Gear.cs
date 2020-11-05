@@ -40,7 +40,7 @@ public class Gear{
         //subSlotthree= null;
         //subSlotfour= null;
     }
-/*thinking our loud
+/*thinking our loud ---- Inate is going to be tricky because it will possably be alot of wierd stuff
 
     public Gear(int level,int starLevel, Slot mySlot, SVP mainStat, SVP Inate, SVP subSlotone, SVP subSlottwo, SVP subSlotthree, SVP subSlotfour){
         this.level = 1;
