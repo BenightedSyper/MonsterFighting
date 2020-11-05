@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum TARGET { SINGLE, MULTI, RANDOM, SELF, ALLY, FRIENDLYTEAM } //"single" might need to be "selected"
-public enum STAT { HEALTH, ATTACK, DEFENSE, SPATTACK, SPDEFENSE, SPEED }
+public enum TARGET { SINGLE, MULTI, RANDOM, SELF, ALLY, FRIENDLYTEAM, ALL, ALLRANDOM } //"single" might need to be "selected"
+public enum STAT { HEALTH, ATTACK, DEFENSE, SPATTACK, SPDEFENSE, SPEED, ACC, RES }
 
 
 public struct SkilletteResponse {
