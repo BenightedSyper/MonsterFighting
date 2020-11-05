@@ -7,6 +7,7 @@ using UnityEngine;
 public enum TARGET { SINGLE, MULTI, RANDOM, SELF, ALLY, FRIENDLYTEAM, ALL, ALLRANDOM } //"single" might need to be "selected"
 public enum STAT { HEALTH, ATTACK, DEFENSE, SPATTACK, SPDEFENSE, SPEED, ACC, RES }
 
+//public float moveSpeed = 1f; figured all skills have the possability to need a move speed and it should be in here somewhere
 
 public struct SkilletteResponse {
     public int damageDone;

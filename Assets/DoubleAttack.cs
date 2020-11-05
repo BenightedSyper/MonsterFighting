@@ -8,6 +8,7 @@ public class DoubleAttack : Skill {
         skillettes = new Skillette[2];
         skillettes[0] = new Skillette(TARGET.SINGLE,new float[6]{0,3.7f,0,0,0,0}, null);
         skillettes[1] = new Skillette(TARGET.SINGLE,new float[6]{0,3.7f,0,0,0,0}, null);
+        //transform.Translate(skill.moveSpeed * Time.deltaTime) would need a direction
     }
     public override void OnSkillStart(){
         //nothing
@@ -18,4 +19,6 @@ public class DoubleAttack : Skill {
     public override void OnSkillEnd(SkilletteResponse _sr){
         //nothing
     }
+
+    
 }
