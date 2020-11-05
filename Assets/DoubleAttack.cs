@@ -18,4 +18,6 @@ public class DoubleAttack : Skill {
     public override void OnSkillEnd(SkilletteResponse _sr){
         //nothing
     }
+
+    
 }

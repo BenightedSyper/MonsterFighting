@@ -72,11 +72,32 @@ public class Gear{
         this.mySlot = _slot;
         this.modifiers = _mods;
     }
-/*thinking our loud
+/*thinking our loud ---- Inate is going to be tricky because it will possably be alot of wierd stuff
 
-    public Gear(int level,int starLevel, Slot mySlot, SVP mainStat, SVP Inate, SVP subSlotone, SVP subSlottwo, SVP subSlotthree, SVP subSlotfour){
+    //This would be a 1 star helmet
+    public Gear(int level,int starLevel, Slot mySlot, SVP mainStat, SVP inate, SVP subSlotone, SVP subSlottwo, SVP subSlotthree, SVP subSlotfour){
         this.level = 1;
         this.starLevel = 1;
+        this.mySlot = Slot.HEAD;
+        this.mainStat = new SVP(StatBooster.HPFLAT, 10);
+        this.inate = //some how call a random value inate will need its own enum or dictionary
+        this.subSlotone = null;
+        this.subSlottwo = null;
+        this.subSlotthree = null;
+        this.subSlotfour = null;
+    }
+
+    //This would be a 2 star Helmet
+    public Gear(int level,int starLevel, Slot mySlot, SVP mainStat, SVP Inate, SVP subSlotone, SVP subSlottwo, SVP subSlotthree, SVP subSlotfour){
+        this.level = 1;
+        this.starLevel = 2;
+        this.mySlot = Slot.HEAD;
+        this.mainStat = new SVP(StatBooster.HPFLAT, 20);
+        this.inate = //some how call a random value inate will need its own enum or dictionary
+        this.subSlotone = null;
+        this.subSlottwo = null;
+        this.subSlotthree = null;
+        this.subSlotfour = null;
     }
     
     Gear headGear1 = new Gear(1, 1, Slot.HEAD, StatBooster.HPFLAT(Health,100), null, null, null, null, null )
