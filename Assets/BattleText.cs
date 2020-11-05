@@ -8,7 +8,9 @@ public class BattleText : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, 2f);
-        transform.Translate(new Vector3(0,0,1));
+        
+        
+        transform.Translate(Random.insideUnitCircle);
     }
 
     // Update is called once per frame

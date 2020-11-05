@@ -9,9 +9,9 @@ public class SlashRocks : Skill {
         skillettes[0] = new Skillette(
             TARGET.SINGLE,
             new float[6]{0.18f,1,0,0,0,0},
-            new Dictionary<string, d_P>(){
-                ["defenseBreak"] = new d_P(2,0.4f)  
-            });
+            new StatusEffect[1]{new StatusEffect(STATUSEFFECTTYPE.DEFENSEBREAK, 2,
+                                new float[8] { 1f, 1f, 0.7f, 1f, 1f, 1f, 1f, 1f })},
+            null);
     }
     public override void OnSkillStart(){
         

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rand = UnityEngine.Random;
 using UnityEditor;
 
 public struct SkillInfo {
@@ -54,17 +55,20 @@ public class BattleManager : MonoBehaviour
         //monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new int[]{39,52,43,60,50,65});
 
         hell = new FireHellhound();
-        hell.SetPlayerID(1);
+        hell.SetPlayerID(0);
         hellhoundGO = Instantiate(prefabMSM, friendlySpawn1.position, Quaternion.identity);
         MonsterStatusManager myMSM = hellhoundGO.GetComponent<MonsterStatusManager>();
         myMSM.myMonster = hell;
-        friendlyMonsters = new Monster[1]{ hell };
+        
 
         vaga = new Vagabond();
+        vaga.SetPlayerID(1);
         vagaGO = Instantiate(prefabMSM, enemySpawn1.position ,Quaternion.identity);
         MonsterStatusManager vagaMSM = vagaGO.GetComponent<MonsterStatusManager>();
         vagaMSM.myMonster = vaga;
-        enemyMonsters = new Monster[1]{vaga};
+        
+        friendlyMonsters = new Monster[1]{ vaga };
+        enemyMonsters = new Monster[1]{ hell };
 
         //test.Print();
 
@@ -147,12 +151,14 @@ public class BattleManager : MonoBehaviour
         }
         //select a skill and a target for the enemy monster to use
         _mon.attackBar.Zero();
+        _mon.OnTurnEnd();
         myState = GAMESTATE.TICKING;
     }
-    public void PlayerTurnChoice(Monster _curr, int _skill, Monster _target, Transform _tragetTransform){
+    public void PlayerTurnChoice(Monster _curr, int _skill, Monster _target, Transform _targetTransform){
         if(myState != GAMESTATE.PLAYERTURN){
             return;
         }
+
         Skill chosen = _curr.skills[_skill - 1];
         foreach(Skillette _s in chosen.skillettes){
             int totalDamage = 0;
@@ -161,14 +167,29 @@ public class BattleManager : MonoBehaviour
             }
             //check for critical strike
             //roll for debuff
-            int damageDone = _target.takeDamage(totalDamage);
+            int damageDone = _target.takeDamage(totalDamage); //probably should make an attack object with damage and damage type and other things
             SkilletteResponse response = new SkilletteResponse();
             response.damageDone = damageDone;
-            GameObject bText = Instantiate(battleText, _tragetTransform.position, Quaternion.identity);
+            GameObject bText = Instantiate(battleText, _targetTransform.position, Quaternion.identity);
             bText.transform.GetChild(0).GetComponent<TextMesh>().text = damageDone.ToString();
             //add flags for debuffs landed or other events like KO'ing a monster
-            //_res.flags
-
+            foreach (StatusEffect debuff in _s.debuffs){
+                float chance = 0f;
+                if(_curr.currentAccuracy == _target.currentResistance){
+                    chance = 0.5f;
+                }else{
+                    chance = _curr.currentAccuracy / (_curr.currentAccuracy + _target.currentResistance);
+                }
+                //Debug.Log($"my chance to land a Debuff is {chance}");    
+                if(Rand.value < chance){
+                    //debuff name
+                    //debuff type
+                    //debuff duration
+                    //count on turn start/end
+                    SkilletteResponse SER = _target.takeStatus(debuff);
+                }
+            }
+            //merge dictionary of effects that happened this skillette
             chosen.OnSkillEnd(response);
             
         }
@@ -178,7 +199,7 @@ public class BattleManager : MonoBehaviour
 
 
         team[0].attackBar.Zero();
-
+        team[0].OnTurnEnd();
         myState = GAMESTATE.TICKING;
     }   
     public void InitilizeCombatSW(){
@@ -221,6 +242,7 @@ public class BattleManager : MonoBehaviour
             //monster takes turn
             if(team[0].playerID == 1){
                 //playerID of the current player
+                selectedSkill = 1;
                 myState = GAMESTATE.PLAYERTURN;
             }else{
                 //enemies turn
@@ -228,7 +250,6 @@ public class BattleManager : MonoBehaviour
                 myState = GAMESTATE.ENEMYTURN;
                 EnemyTurnChoice(team[0]);
             }
-            
         }
     }
 }

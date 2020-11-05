@@ -8,6 +8,7 @@ public enum Type {
     Wind, 
     Grass
 }
+public enum ATTRIBUTE { HP, ATK, DEF, SPATK, SPDEF, SPD, ACC, RES };
 public struct AttackBar{
     public double bar { get; set; }
     public void Increase(double _val){
@@ -33,8 +34,12 @@ public class Monster
 
     public int[] baseStats;
     public int[] levelStats;
+    //public Gear[] equipment;
     public int[] runedStats;
+    //public StatusEffect[] matchEffects;
     public int[] matchStats;
+    public List<StatusEffect> statusEffects = new List<StatusEffect>();
+    private float[] effectModifiers;
     public int[] currentStats;
     public Skill[] skills;
 
@@ -74,6 +79,18 @@ public class Monster
         }
         //set{ baseStats[5] = value; }
     }
+    public int baseAccuracy{
+        get{
+            return baseStats[6];
+        }
+        //set{ baseStats[6] = value; }
+    }
+    public int baseResistance{
+        get{
+            return baseStats[7];
+        }
+        //set{ baseStats[7] = value; }
+    }
 
     public int levelHealth {
         get{
@@ -110,6 +127,18 @@ public class Monster
             return levelStats[5];
         }
         //set{ levelStats[5] = value; }
+    }
+    public int levelAccuracy{
+        get{
+            return levelStats[6];
+        }
+        //set{ levelStats[6] = value; }
+    }
+    public int levelResistance{
+        get{
+            return levelStats[7];
+        }
+        //set{ levelStats[7] = value; }
     }
 
     public int runedHealth {
@@ -148,7 +177,18 @@ public class Monster
         }
         //set{ runedStats[5] = value; }
     }
-
+    public int runedAccuracy{
+        get{
+            return runedStats[6];
+        }
+        //set{ runedStats[6] = value; }
+    }
+    public int runedResistance{
+        get{
+            return runedStats[7];
+        }
+        //set{ runedStats[7] = value; }
+    }
 
     public int matchHealth {
         get{
@@ -185,6 +225,18 @@ public class Monster
             return matchStats[5];
         }
         //set{ matchStats[5] = value; }
+    }
+    public int matchAccuracy{
+        get{
+            return matchStats[6];
+        }
+        //set{ matchStats[6] = value; }
+    }
+    public int matchResistance{
+        get{
+            return matchStats[7];
+        }
+        //set{ matchStats[7] = value; }
     }
 
     public int currentHealth {
@@ -235,6 +287,22 @@ public class Monster
             currentStats[5] = value; 
         }
     }
+    public int currentAccuracy{
+        get{
+            return currentStats[6];
+        }
+        set{
+            currentStats[6] = value;
+        }
+    }
+    public int currentResistance{
+        get{
+            return currentStats[7];
+        }
+        set{
+            currentStats[7] = value;
+        }
+    }
 
 
     public Monster(){
@@ -265,10 +333,12 @@ public class Monster
         this.primary = primary;
         this.secondary = secondary;
         baseStats = _base;
-        levelStats = new int[]{0,0,0,0,0,0};
-        runedStats = new int[]{0,0,0,0,0,0};
-        matchStats = new int[]{0,0,0,0,0,0};
-        currentStats = new int[]{0,0,0,0,0,0};
+        levelStats = new int[]{0,0,0,0,0,0,0,0};
+        runedStats = new int[]{0,0,0,0,0,0,0,0};
+        matchStats = new int[]{0,0,0,0,0,0,0,0};
+        currentStats = new int[]{0,0,0,0,0,0,0,0};
+
+        effectModifiers = new float[8]{ 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f };
         
         //CurrentLevel = new Stats();
         CalculateCurrentLevelStats();
@@ -289,6 +359,18 @@ public class Monster
             runedStats[i] = levelStats[i];
             matchStats[i] = levelStats[i];
             currentStats[i] = levelStats[i];
+        }
+    }
+    private void CalculateStatusEffectModifiers(){
+        effectModifiers = new float[8]{1f,1f,1f,1f,1f,1f,1f,1f};
+        foreach (StatusEffect se in statusEffects){
+            for (int i = 0; i < effectModifiers.Length; i++){
+                effectModifiers[i] *= se.modifiers[i];
+            }
+        }
+        for (int i = 0; i < effectModifiers.Length; i++){
+            //if any buffs effect health we will need to calculate the differently to avoid issues.
+            currentStats[i] = Mathf.FloorToInt(matchStats[i] * effectModifiers[i]);
         }
     }
 
@@ -331,7 +413,28 @@ public class Monster
         currentHealth += _val;
         return _val;
     }
-
+    public SkilletteResponse takeStatus(StatusEffect _se){
+        SkilletteResponse response = new SkilletteResponse();
+        switch (_se.statusType)
+        {
+            case STATUSEFFECTTYPE.DEFENSEBREAK:
+            case STATUSEFFECTTYPE.ATTACKBREAK:
+            default:
+                bool found = false;
+                foreach (StatusEffect se in statusEffects){
+                    if(se.statusType == _se.statusType){
+                        se.duration = Mathf.Max(se.duration, _se.duration);
+                        found = true;
+                    }
+                }
+                if(!found){
+                    statusEffects.Add(_se);
+                    CalculateStatusEffectModifiers();
+                }
+                break;
+        }
+        return response;
+    }
     public virtual void OnEnterBattle(){
         //test for will set
         //
@@ -340,10 +443,21 @@ public class Monster
 
     }
     public virtual void OnTurnStart(){
-
+        //check for buffs/debuffs that have effects on the beginning of the turn life gain, DoTs
     }
     public virtual void OnTurnEnd(){
-
+        List<StatusEffect> toRemove = new List<StatusEffect>();
+        foreach (StatusEffect se in statusEffects){
+            se.duration--;
+            if(se.duration <= 0){
+                toRemove.Add(se);
+            }
+        }
+        foreach (StatusEffect re in toRemove){
+            statusEffects.Remove(re);
+        }
+        
+        //Debug.Log($"{this.name} has {statusEffects.Count} debuffs");
     }
     public virtual void OnDeath(){
 

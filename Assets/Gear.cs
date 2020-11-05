@@ -5,9 +5,13 @@ using UnityEngine;
 
 public enum Slot {HEAD, SHIRT, PANTS, BOOTS, LHAND, RHAND}
 
-public enum StatBooster { HPFLAT, HPPERCENT, ATTACKFLAT, ATTACKPERCENT, DEFFLAT, DEFPERCENT,MAJFLAT, MAJPERCENT, SPEDD, ACC, RES }
+public enum StatBooster { HPFLAT, HPPERCENT, 
+                          ATTACKFLAT, ATTACKPERCENT, 
+                          DEFFLAT, DEFPERCENT, 
+                          MAJFLAT, MAJPERCENT, 
+                          SPEDD, ACC, RES }
 
-public struct SVP{
+public class SVP{
     StatBooster stat;
     int value;
     public SVP(StatBooster _s, int _v){
@@ -21,24 +25,52 @@ public class Gear{
     //Basic parts that eevery Ruin no matter what will have to consider.
     public int level;
     public int starLevel;
-    public SVP mainStat; 
-    public SVP Inate;
     public Slot mySlot;
-    public SVP subSlotone;
-    public SVP subSlottwo;
-    public SVP subSlotthree;
-    public SVP subSlotfour;    
+    public SVP[] modifiers;
+    public SVP mainStat{
+        get{
+            return modifiers[0];
+        }
+    } 
+    public SVP inateStat{
+        get{
+            return modifiers[1];
+        }
+    }
+    public SVP subStatOne{
+        get{
+            return modifiers[2];
+        }
+    }
+    public SVP subStatTwo{
+        get{
+            return modifiers[3];
+        }
+    }
+    public SVP subStatThree{
+        get{
+            return modifiers[4];
+        }
+    }
+    public SVP subStatFour{
+        get{
+            return modifiers[5];
+        }
+    }  
 
     //This is the worst case scenario. If everything goes wrond this piece of gear would be called.
     public Gear(){
         level=1;
-        mySlot=Slot.HEAD;   
-        mainStat= new SVP (StatBooster.HPFLAT,1);
-        //Inate= null;
-        //subSlotone= null;
-        //subSlottwo= null;
-        //subSlotthree= null;
-        //subSlotfour= null;
+        starLevel = 1;
+        mySlot=Slot.HEAD;
+        modifiers = new SVP[6]{new SVP (StatBooster.HPFLAT,1), null, null, null, null, null};
+    }
+
+    public Gear(int _level, int _star, Slot _slot, SVP[] _mods){
+        this.level = _level;
+        this.starLevel = _star;
+        this.mySlot = _slot;
+        this.modifiers = _mods;
     }
 /*thinking our loud
 

@@ -27,12 +27,14 @@ public struct d_P{
 public struct Skillette {
     public TARGET target;
     public float[] damageScaling;
-    public Dictionary<string, d_P> debuffs;
+    public StatusEffect[] debuffs;
+    public StatusEffect[] buffs;
 
-   public Skillette(TARGET _target, float[] _dScale, Dictionary<string, d_P> debuffCalc){
+   public Skillette(TARGET _target, float[] _dScale, StatusEffect[] _debuffs, StatusEffect[] _buffs){
         target = _target;
         damageScaling = _dScale;
-        debuffs =  debuffCalc;
+        debuffs =  _debuffs;
+        buffs = _buffs;
     }
 }
 
@@ -43,7 +45,7 @@ public class Skill{
     public Skill(Monster _myself){
         myMonster = _myself;
         skillettes = new Skillette[1];
-        skillettes[0] = new Skillette(TARGET.SINGLE,new float[6]{0,1,0,0,0,0}, null);
+        skillettes[0] = new Skillette(TARGET.SINGLE,new float[6]{0,1,0,0,0,0}, null, null);
     }
     public Skill(Monster _myself, Skillette[] _sk){
         myMonster = _myself;

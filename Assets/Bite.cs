@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bite : Skill {
     public Bite(Monster _myself): base(_myself){
         skillettes = new Skillette[1];
-        skillettes[0] = new Skillette(TARGET.SINGLE,new float[6]{0,3.6f,0,0,0,0}, null);
+        skillettes[0] = new Skillette(TARGET.SINGLE,new float[6]{0,3.6f,0,0,0,0}, null, null);
     }
     public override void OnSkillStart(){
         //nothing
