@@ -58,7 +58,15 @@ public class Gear{
 
     //This would be a 2 star Helmet
     public Gear(int level,int starLevel, Slot mySlot, SVP mainStat, SVP Inate, SVP subSlotone, SVP subSlottwo, SVP subSlotthree, SVP subSlotfour){
-
+        this.level = 1;
+        this.starLevel = 2;
+        this.mySlot = Slot.HEAD;
+        this.mainStat = new SVP(StatBooster.HPFLAT, 20);
+        this.inate = //some how call a random value inate will need its own enum or dictionary
+        this.subSlotone = null;
+        this.subSlottwo = null;
+        this.subSlotthree = null;
+        this.subSlotfour = null;
     }
     
     Gear headGear1 = new Gear(1, 1, Slot.HEAD, StatBooster.HPFLAT(Health,100), null, null, null, null, null )
