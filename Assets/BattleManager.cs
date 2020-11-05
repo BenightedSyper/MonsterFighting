@@ -56,14 +56,14 @@ public class BattleManager : MonoBehaviour
 
         hell = new FireHellhound();
         hell.SetPlayerID(0);
-        hellhoundGO = Instantiate(prefabMSM, friendlySpawn1.position, Quaternion.identity);
+        hellhoundGO = Instantiate(prefabMSM, enemySpawn1.position, Quaternion.identity);
         MonsterStatusManager myMSM = hellhoundGO.GetComponent<MonsterStatusManager>();
         myMSM.myMonster = hell;
         
 
         vaga = new Vagabond();
         vaga.SetPlayerID(1);
-        vagaGO = Instantiate(prefabMSM, enemySpawn1.position ,Quaternion.identity);
+        vagaGO = Instantiate(prefabMSM, friendlySpawn1.position ,Quaternion.identity);
         MonsterStatusManager vagaMSM = vagaGO.GetComponent<MonsterStatusManager>();
         vagaMSM.myMonster = vaga;
         
