@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Slot {HEAD, SHIRT, PANTS, BOOTS, LHAND, RHAND}
+public enum SLOT {HEAD, SHIRT, PANTS, BOOTS, LHAND, RHAND}
+public enum RARITY {GRAY, GREEN ,BLUE ,PURPLE ,ORANGE}
 
 public enum StatBooster { HPFLAT, HPPERCENT, 
                           ATTACKFLAT, ATTACKPERCENT, 
@@ -25,53 +26,60 @@ public class Gear{
     //Basic parts that eevery Ruin no matter what will have to consider.
     public int level;
     public int starLevel;
-    public Slot mySlot;
+    public RARITY rarity;
+    public SLOT mySlot;
     public SVP[] modifiers;
     public SVP mainStat{
         get{
-            return modifiers[0];
+            return modifiers[0];        //this is the base stat
         }
     } 
     public SVP inateStat{
         get{
-            return modifiers[1];
+            return modifiers[1];        //this will be the inate
         }
     }
     public SVP subStatOne{
         get{
-            return modifiers[2];
+            return modifiers[2];        //substat one
         }
     }
     public SVP subStatTwo{
         get{
-            return modifiers[3];
+            return modifiers[3];        //substat two
         }
     }
     public SVP subStatThree{
         get{
-            return modifiers[4];
+            return modifiers[4];        //substat three
         }
     }
     public SVP subStatFour{
         get{
-            return modifiers[5];
+            return modifiers[5];        //substat four
         }
     }  
 
     //This is the worst case scenario. If everything goes wrond this piece of gear would be called.
     public Gear(){
-        level=1;
+        level = 1;
         starLevel = 1;
-        mySlot=Slot.HEAD;
+        mySlot = SLOT.HEAD;
+        rarity = RARITY.GRAY;
         modifiers = new SVP[6]{new SVP (StatBooster.HPFLAT,1), null, null, null, null, null};
     }
 
-    public Gear(int _level, int _star, Slot _slot, SVP[] _mods){
+    public Gear(int _level, int _star, SLOT _slot, SVP[] _mods){
         this.level = _level;
         this.starLevel = _star;
         this.mySlot = _slot;
         this.modifiers = _mods;
     }
+
+    public void AddSubStat(){
+        
+    }
+
 /*thinking our loud ---- Inate is going to be tricky because it will possably be alot of wierd stuff
 
     //This would be a 1 star helmet
