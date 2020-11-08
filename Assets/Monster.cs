@@ -414,6 +414,7 @@ public class Monster
                     }
                     break;            
                 default:
+                break;
             }
             
         }
