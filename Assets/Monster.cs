@@ -416,7 +416,27 @@ public class Monster
                 default:
                 break;
             }
-            
+            switch (_g.mainStat.stat)
+            {
+                case StatBooster.HPPERCENT:
+                    break;
+                case StatBooster.ATTACKPERCENT:
+                    break;
+                case StatBooster.DEFPERCENT:
+                    break;
+                case StatBooster.MAJPERCENT:
+                    break;
+                case StatBooster.MAJDEFPERCENT:
+                    break;
+                case StatBooster.SPEED:
+                    break;
+                case StatBooster.ACC:
+                    break;
+                case StatBooster.RES:
+                    break;
+                default:
+                break;
+            }    
         }
         for (int i = 0; i < baseStats.Length; i++)
         {
