@@ -34,7 +34,7 @@ public class Monster
 
     public int[] baseStats;
     public int[] levelStats;
-    //public Gear[] equipment;
+    public Gear[] equipment;
     public int[] runedStats;
     //public StatusEffect[] matchEffects;
     public int[] matchStats;
@@ -318,7 +318,9 @@ public class Monster
         matchStats = new int[]{0,0,0,0,0,0};
         currentStats = new int[]{0,0,0,0,0,0};
 
-        //Equipment = new Modifiers();
+        equipment = new Gear[6]{
+            null, null, null, null, null, null
+        };
         //CurrentLevel = new Stats();
         CalculateCurrentLevelStats();
         attackBar = new AttackBar();
@@ -339,7 +341,9 @@ public class Monster
         currentStats = new int[]{0,0,0,0,0,0,0,0};
 
         effectModifiers = new float[8]{ 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f };
-        
+        equipment = new Gear[6]{
+            null, null, null, null, null, null
+        };
         //CurrentLevel = new Stats();
         CalculateCurrentLevelStats();
         attackBar = new AttackBar();
@@ -361,6 +365,64 @@ public class Monster
             currentStats[i] = levelStats[i];
         }
     }
+
+    private void CalaculateRuinStats(){
+        int[] calculateEvenflat = new int[8]{0,0,0,0,0,0,0,0};
+        int[] calculateOtherflat = new int[8]{0,0,0,0,0,0,0,0};
+        float[] calculatePercent = new float[8]{0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
+        foreach (Gear  _g in equipment){
+            switch (_g.mainStat.stat)
+            {
+                case StatBooster.HPFLAT:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[0] = calculateEvenflat[0] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.ATTACKFLAT:
+                     if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[1] = calculateEvenflat[] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.DEFFLAT:
+                     if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[2] = calculateEvenflat[2] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.MAJFLAT:
+                     if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[3] = calculateEvenflat[3] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.MAJDEFFLAT:
+                     if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[4] = calculateEvenflat[4] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.SPEED:
+                     if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[5] = calculateEvenflat[5] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.ACC:
+                     if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[6] = calculateEvenflat[6] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.RES:
+                     if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
+                        calculateEvenflat[7] = calculateEvenflat[7] + _g.mainStat.value;
+                    }
+                    break;            
+                default:
+            }
+            
+        }
+        for (int i = 0; i < baseStats.Length; i++)
+        {
+        runedStats[i] = Mathf.FloorToInt (((levelHealth + calculateEvenflat[i]) * calculatePercent[i]) + calculateOtherflat[i]);
+        }
+    }
+
     private void CalculateStatusEffectModifiers(){
         effectModifiers = new float[8]{1f,1f,1f,1f,1f,1f,1f,1f};
         foreach (StatusEffect se in statusEffects){

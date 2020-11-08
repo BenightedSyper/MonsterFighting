@@ -54,6 +54,8 @@ public class BattleManager : MonoBehaviour
         //monOne = new Monster(0, 10, "Bulbasaur", Type.Grass, Type.Grass, new int[]{45,49,49,65,65,45});
         //monTwo = new Monster(1, 10, "Charmander", Type.Fire, Type.Fire, new int[]{39,52,43,60,50,65});
 
+        Gear gear = new HeadPiece();
+
         hell = new FireHellhound();
         hell.SetPlayerID(0);
         hellhoundGO = Instantiate(prefabMSM, enemySpawn1.position, Quaternion.identity);
@@ -66,6 +68,8 @@ public class BattleManager : MonoBehaviour
         vagaGO = Instantiate(prefabMSM, friendlySpawn1.position ,Quaternion.identity);
         MonsterStatusManager vagaMSM = vagaGO.GetComponent<MonsterStatusManager>();
         vagaMSM.myMonster = vaga;
+        vaga.equipment[0] = gear;
+
         
         friendlyMonsters = new Monster[1]{ vaga };
         enemyMonsters = new Monster[1]{ hell };

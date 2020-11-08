@@ -10,11 +10,12 @@ public enum StatBooster { HPFLAT, HPPERCENT,
                           ATTACKFLAT, ATTACKPERCENT, 
                           DEFFLAT, DEFPERCENT, 
                           MAJFLAT, MAJPERCENT, 
-                          SPEDD, ACC, RES }
+                          MAJDEFFLAT, MAJDEFPERCENT,                     
+                          SPEED, ACC, RES }
 
 public class SVP{
-    StatBooster stat;
-    int value;
+    public StatBooster stat;
+    public int value;
     public SVP(StatBooster _s, int _v){
         this.stat = _s;
         this.value = _v;
@@ -77,7 +78,7 @@ public class Gear{
     }
 
     public void AddSubStat(){
-        
+
     }
 
 /*thinking our loud ---- Inate is going to be tricky because it will possably be alot of wierd stuff
