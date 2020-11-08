@@ -380,7 +380,7 @@ public class Monster
                     break;
                 case StatBooster.ATTACKFLAT:
                      if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND) {
-                        calculateEvenflat[1] = calculateEvenflat[] + _g.mainStat.value;
+                        calculateEvenflat[1] = calculateEvenflat[1] + _g.mainStat.value;
                     }
                     break;
                 case StatBooster.DEFFLAT:
