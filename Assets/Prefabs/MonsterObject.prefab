@@ -111,8 +111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 5449601067525241972}
   AttackBar: {fileID: 2235713152561104697}
-  battleText: {fileID: 6203103487918887841, guid: 381b7d1d7cb673146b2196c694ee41f9,
-    type: 3}
+  defenseBreak: {fileID: 2800000, guid: d7fcf96b770d72b4e8a947b1e586ed20, type: 3}
+  attackBreak: {fileID: 2800000, guid: 546728f28ab731d41b1832cabb791329, type: 3}
 --- !u!1 &3184733992849156694
 GameObject:
   m_ObjectHideFlags: 0
