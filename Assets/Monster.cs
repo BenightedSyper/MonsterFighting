@@ -367,8 +367,11 @@ public class Monster
     }
 
     private void CalaculateRuinStats(){
-        int[] calculateEvenflat = new int[8]{0,0,0,0,0,0,0,0};
+        //HP, Attack, Def, Maj, MajDef, Speed, ACC, RES only when flat values in slot boots lhand and rhand
+        int[] calculateEvenflat = new int[8]{0,0,0,0,0,0,0,0};   
+        //HP, Attack, Def, Maj, MajDef, Speed, ACC, RES this is all other flats including substats   
         int[] calculateOtherflat = new int[8]{0,0,0,0,0,0,0,0};
+        //HP%, Attack%, Def%, Maj%, MajDef%, Speed%, ACC%, RES% this is a total of all percents provided from gear
         float[] calculatePercent = new float[8]{0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
         foreach (Gear  _g in equipment){
             switch (_g.mainStat.stat)
@@ -416,23 +419,49 @@ public class Monster
                 default:
                 break;
             }
+
+            //this still needs sub stats cant do or in a switch so need to create a new value that accounts for all subslots
             switch (_g.mainStat.stat)
             {
                 case StatBooster.HPPERCENT:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[0] = calculatePercent[0] + _g.mainStat.value;
+                    }
                     break;
                 case StatBooster.ATTACKPERCENT:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[1] = calculatePercent[1] + _g.mainStat.value;
+                    }
                     break;
                 case StatBooster.DEFPERCENT:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[2] = calculatePercent[2] + _g.mainStat.value;
+                    }
                     break;
                 case StatBooster.MAJPERCENT:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[3] = calculatePercent[3] + _g.mainStat.value;
+                    }
                     break;
                 case StatBooster.MAJDEFPERCENT:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[4] = calculatePercent[4] + _g.mainStat.value;
+                    }
                     break;
                 case StatBooster.SPEED:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[5] = calculatePercent[5] + _g.mainStat.value;
+                    }
                     break;
                 case StatBooster.ACC:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[6] = calculatePercent[6] + _g.mainStat.value;
+                    }
                     break;
                 case StatBooster.RES:
+                    if(_g.mySlot == SLOT.BOOTS || _g.mySlot == SLOT.LHAND || _g.mySlot == SLOT.RHAND){
+                        calculatePercent[7] = calculatePercent[7] + _g.mainStat.value;
+                    }
                     break;
                 default:
                 break;
