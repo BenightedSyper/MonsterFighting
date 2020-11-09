@@ -38,7 +38,7 @@ public class Monster
     public int[] runedStats;
     //public StatusEffect[] matchEffects;
     public int[] matchStats;
-    public List<StatusEffect> statusEffects = new List<StatusEffect>();
+    public List<StatusEffect> statusEffects;
     private float[] effectModifiers;
     public int[] currentStats;
     public Skill[] skills;
@@ -317,10 +317,9 @@ public class Monster
         runedStats = new int[]{0,0,0,0,0,0};
         matchStats = new int[]{0,0,0,0,0,0};
         currentStats = new int[]{0,0,0,0,0,0};
+        statusEffects = new List<StatusEffect>();
 
-        equipment = new Gear[6]{
-            null, null, null, null, null, null
-        };
+        equipment = new Gear[6]{ null, null, null, null, null, null };
         //CurrentLevel = new Stats();
         CalculateCurrentLevelStats();
         attackBar = new AttackBar();
@@ -339,6 +338,7 @@ public class Monster
         runedStats = new int[]{0,0,0,0,0,0,0,0};
         matchStats = new int[]{0,0,0,0,0,0,0,0};
         currentStats = new int[]{0,0,0,0,0,0,0,0};
+        statusEffects = new List<StatusEffect>();
 
         effectModifiers = new float[8]{ 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f };
         equipment = new Gear[6]{
@@ -358,6 +358,8 @@ public class Monster
         levelStats[3] = BasedOnLevel(baseSpAttack);
         levelStats[4] = BasedOnLevel(baseSpDefense);
         levelStats[5] = BasedOnLevel(baseSpeed); //if not max level, you get fucked
+        levelStats[6] = baseAccuracy;
+        levelStats[7] = baseResistance;
 
         for(int i = 0; i < levelStats.Length; i++){
             runedStats[i] = levelStats[i];
@@ -366,7 +368,7 @@ public class Monster
         }
     }
 
-    private void CalaculateRuinStats(){
+    private void CalaculateRunedStats(){
         //HP, Attack, Def, Maj, MajDef, Speed, ACC, RES only when flat values in slot boots lhand and rhand
         int[] calculateEvenflat = new int[8]{0,0,0,0,0,0,0,0};   
         //HP, Attack, Def, Maj, MajDef, Speed, ACC, RES this is all other flats including substats   
@@ -467,8 +469,7 @@ public class Monster
                 break;
             }    
         }
-        for (int i = 0; i < baseStats.Length; i++)
-        {
+        for (int i = 0; i < baseStats.Length; i++){
         runedStats[i] = Mathf.FloorToInt (((levelHealth + calculateEvenflat[i]) * calculatePercent[i]) + calculateOtherflat[i]);
         }
     }
@@ -533,14 +534,14 @@ public class Monster
             case STATUSEFFECTTYPE.ATTACKBREAK:
             default:
                 bool found = false;
-                foreach (StatusEffect se in statusEffects){
+                foreach (StatusEffect se in this.statusEffects){
                     if(se.statusType == _se.statusType){
-                        se.duration = Mathf.Max(se.duration, _se.duration);
+                        se.duration = se.duration > _se.duration ? se.duration : _se.duration;
                         found = true;
                     }
                 }
                 if(!found){
-                    statusEffects.Add(_se);
+                    this.statusEffects.Add(_se);
                     CalculateStatusEffectModifiers();
                 }
                 break;
@@ -559,14 +560,15 @@ public class Monster
     }
     public virtual void OnTurnEnd(){
         List<StatusEffect> toRemove = new List<StatusEffect>();
-        foreach (StatusEffect se in statusEffects){
+        foreach (StatusEffect se in this.statusEffects){
             se.duration--;
             if(se.duration <= 0){
                 toRemove.Add(se);
             }
         }
         foreach (StatusEffect re in toRemove){
-            statusEffects.Remove(re);
+
+            this.statusEffects.Remove(re);
         }
         
         //Debug.Log($"{this.name} has {statusEffects.Count} debuffs");

@@ -26,4 +26,11 @@ public class StatusEffect{
         this.turnStart = _start;
         this.stacking = _stack;
     }
+    public StatusEffect(StatusEffect _se){
+        this.statusType = _se.statusType;
+        this.duration = _se.duration;
+        this.modifiers = _se.modifiers;
+        this.turnStart = _se.turnStart;
+        this.stacking = _se.stacking;
+    }
 }

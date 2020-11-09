@@ -70,7 +70,6 @@ public class BattleManager : MonoBehaviour
         vagaMSM.myMonster = vaga;
         vaga.equipment[0] = gear;
 
-        
         friendlyMonsters = new Monster[1]{ vaga };
         enemyMonsters = new Monster[1]{ hell };
 
@@ -140,7 +139,7 @@ public class BattleManager : MonoBehaviour
                         }
                         //Monster targetMonster = hit.transform.GetComponent<MonsterStatusManager>().myMonster;
                         //PlayerTurnChoice();
-                        Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
+                        //Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
                     }
                 }
                 break;
@@ -179,18 +178,14 @@ public class BattleManager : MonoBehaviour
             //add flags for debuffs landed or other events like KO'ing a monster
             foreach (StatusEffect debuff in _s.debuffs){
                 float chance = 0f;
-                if(_curr.currentAccuracy == _target.currentResistance){
-                    chance = 0.5f;
-                }else{
-                    chance = _curr.currentAccuracy / (_curr.currentAccuracy + _target.currentResistance);
-                }
+                chance = (float)_curr.currentAccuracy / ((float)_curr.currentAccuracy + (float)_target.currentResistance);
                 //Debug.Log($"my chance to land a Debuff is {chance}");    
                 if(Rand.value < chance){
                     //debuff name
                     //debuff type
                     //debuff duration
                     //count on turn start/end
-                    SkilletteResponse SER = _target.takeStatus(debuff);
+                    SkilletteResponse SER = _target.takeStatus(new StatusEffect(debuff));
                 }
             }
             //merge dictionary of effects that happened this skillette
@@ -202,8 +197,8 @@ public class BattleManager : MonoBehaviour
         //Debug.Log($"using skill {_skill}!");
 
 
-        team[0].attackBar.Zero();
-        team[0].OnTurnEnd();
+        _curr.attackBar.Zero();
+        _curr.OnTurnEnd();
         myState = GAMESTATE.TICKING;
     }   
     public void InitilizeCombatSW(){
@@ -242,7 +237,7 @@ public class BattleManager : MonoBehaviour
         Array.Sort(team, new AttackBarComparer());
         //sort by atb and check if over 100
         if(team[0].attackBar.IsFull()){
-            Debug.Log($"{team[0].name}'s turn");
+            //Debug.Log($"{team[0].name}'s turn");
             //monster takes turn
             if(team[0].playerID == 1){
                 //playerID of the current player
