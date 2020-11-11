@@ -528,7 +528,7 @@ public class Monster
                         break;
                     case StatBooster.SPEED:
 
-                        break:
+                        break;
                     case StatBooster.ACC:
 
                         break;
