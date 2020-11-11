@@ -166,7 +166,12 @@ public class BattleManager : MonoBehaviour
         foreach(Skillette _s in chosen.skillettes){
             int totalDamage = 0;
             for(int i = 0; i < 8; i++){
-                totalDamage += (int) (_curr.matchStats[i] * _s.damageScaling[i]);
+                if(i == 0){
+                    totalDamage += (int) (_curr.matchStats[i] * _s.damageScaling[i]);
+                }else{
+                    totalDamage += (int) (_curr.currentStats[i] * _s.damageScaling[i]);
+                }
+                
             }
             //check for critical strike
             //roll for debuff
