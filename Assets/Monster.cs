@@ -493,33 +493,32 @@ public class Monster
             default:
             break;     
             }   
-            for (int i = 2; i < 6 ; i++)
-            {
-                switch (_g.modifiers[i])
+            for (int i = 2; i < 6 ; i++){
+                switch (_g.modifiers[i].stat)
                 {
                     case StatBooster.HPFLAT:
-                        calculateOtherflat[0] = calculateOtherflat[0] + _g.modifiers[i];
+                        calculateOtherflat[0] = calculateOtherflat[0] + _g.modifiers[i].value;
                         break;
                     case StatBooster.ATTACKFLAT:
-                        calculateOtherflat[1] = calculateOtherflat[0] + _g.modifiers[1];
+                        calculateOtherflat[1] = calculateOtherflat[1] + _g.modifiers[i].value;
                         break;
                     case StatBooster.DEFFLAT:
-
+                        calculateOtherflat[2] = calculateOtherflat[2] + _g.modifiers[i].value;
                         break;
                     case StatBooster.MAJFLAT:
-
+                        calculateOtherflat[3] = calculateOtherflat[3] + _g.modifiers[i].value;
                         break;
                     case StatBooster.MAJDEFFLAT:
-
+                        calculateOtherflat[4] = calculateOtherflat[4] + _g.modifiers[i].value;
                         break;
                      case StatBooster.HPPERCENT:
-                        calculatePercent[0] = calculatePercent[0] + _g.modifiers[i]
+                        calculatePercent[0] = calculatePercent[0] + _g.modifiers[i].value;
                         break;
                     case StatBooster.ATTACKPERCENT:
-
+                        calculatePercent[1] = calculatePercent[1] + _g.modifiers[i].value;
                         break;
                     case StatBooster.DEFPERCENT:
-
+                        calculatePercent[1] = calculatePercent[1] + _g.modifiers[i].value;
                         break;
                     case StatBooster.MAJPERCENT:
 
@@ -538,8 +537,7 @@ public class Monster
                         break;
                     default:
                     break;
-                    }
-                }    
+                }   
             }
         }
 
