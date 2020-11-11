@@ -624,7 +624,9 @@ public class Monster
     }
     public virtual void OnEnterBattle(){
         //test for will set
-        //
+        for(int i = 0; i < runedStats.Length; i++){
+            matchStats[i] = runedStats[i];
+        }
     }
     public virtual void OnExitBattle(){
 

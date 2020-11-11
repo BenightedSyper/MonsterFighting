@@ -165,8 +165,8 @@ public class BattleManager : MonoBehaviour
         Skill chosen = _curr.skills[_skill - 1];
         foreach(Skillette _s in chosen.skillettes){
             int totalDamage = 0;
-            for(int i = 0; i < 6; i++){
-                totalDamage += (int) (_curr.currentStats[i] * _s.damageScaling[i]);
+            for(int i = 0; i < 8; i++){
+                totalDamage += (int) (_curr.matchStats[i] * _s.damageScaling[i]);
             }
             //check for critical strike
             //roll for debuff
@@ -205,17 +205,9 @@ public class BattleManager : MonoBehaviour
         tick = 0;
         //calculate match bonuses/restrictions
 
-        /*
-        foreach (Monster mon in team){
-            mon.OnEnterBattle();
-        }
-        */
-
-        //set attack bar to 0 for all monsters
-        //monOne.attackBar.Zero();
-        //monTwo.attackBar.Zero();
         foreach (Monster mon in team){
             mon.attackBar.Zero();
+            mon.OnEnterBattle();
         }
         //summoners war
         //increase tick and check for turn
