@@ -422,7 +422,7 @@ public class Monster
                 break;
             }
 
-            //this still needs sub stats cant do or in a switch so need to create a new value that accounts for all subslots
+            //this switch statement checks all the main values of all ruins and puts them into the apropriate Array
             switch (_g.mainStat.stat)
             {
                 case StatBooster.HPPERCENT:
@@ -493,6 +493,8 @@ public class Monster
             default:
             break;     
             }   
+
+            // This for loop goes through all sub stats and puts the values into the apropriate arrray
             for (int i = 2; i < 6 ; i++){
                 switch (_g.modifiers[i].stat)
                 {
@@ -518,22 +520,22 @@ public class Monster
                         calculatePercent[1] = calculatePercent[1] + _g.modifiers[i].value;
                         break;
                     case StatBooster.DEFPERCENT:
-                        calculatePercent[1] = calculatePercent[1] + _g.modifiers[i].value;
+                        calculatePercent[2] = calculatePercent[2] + _g.modifiers[i].value;
                         break;
                     case StatBooster.MAJPERCENT:
-
+                        calculatePercent[3] = calculatePercent[3] + _g.modifiers[i].value;
                         break;
                     case StatBooster.MAJDEFPERCENT:
-
+                        calculatePercent[4] = calculatePercent[4] + _g.modifiers[i].value;
                         break;
                     case StatBooster.SPEED:
-
+                        calculatePercent[5] = calculatePercent[5] + _g.modifiers[i].value;
                         break;
                     case StatBooster.ACC:
-
+                        calculatePercent[6] = calculatePercent[6] + _g.modifiers[i].value;
                         break;
                     case StatBooster.RES:
-
+                        calculatePercent[7] = calculatePercent[7] + _g.modifiers[i].value;
                         break;
                     default:
                     break;
@@ -542,7 +544,7 @@ public class Monster
         }
 
         for (int i = 0; i < baseStats.Length; i++){
-        runedStats[i] = Mathf.FloorToInt (((levelHealth + calculateEvenflat[i]) * calculatePercent[i]) + calculateOtherflat[i]);
+        runedStats[i] = Mathf.FloorToInt (((levelStats[i] + calculateEvenflat[i]) * calculatePercent[i]) + calculateOtherflat[i]);
         }
     }
 
