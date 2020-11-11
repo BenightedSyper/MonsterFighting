@@ -465,10 +465,84 @@ public class Monster
                         calculatePercent[7] = calculatePercent[7] + _g.mainStat.value;
                     }
                     break;
-                default:
-                break;
-            }    
+                case StatBooster.HPFLAT:
+                    if(_g.mySlot == SLOT.HEAD) {
+                        calculateOtherflat[0] = calculateOtherflat[0] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.ATTACKFLAT:
+                     if(_g.mySlot == SLOT.PANTS) {
+                        calculateOtherflat[1] = calculateOtherflat[1] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.DEFFLAT:
+                     if(_g.mySlot == SLOT.SHIRT) {
+                        calculateOtherflat[2] = calculateOtherflat[2] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.MAJFLAT:
+                     if(_g.mySlot == SLOT.PANTS) {
+                        calculateOtherflat[3] = calculateOtherflat[3] + _g.mainStat.value;
+                    }
+                    break;
+                case StatBooster.MAJDEFFLAT:
+                     if(_g.mySlot == SLOT.SHIRT) {
+                        calculateOtherflat[4] = calculateOtherflat[4] + _g.mainStat.value;
+                    }
+                    break;
+            default:
+            break;     
+            }   
+            for (int i = 2; i < 6 ; i++)
+            {
+                switch (_g.modifiers[i])
+                {
+                    case StatBooster.HPFLAT:
+                        calculateOtherflat[0] = calculateOtherflat[0] + _g.modifiers[i];
+                        break;
+                    case StatBooster.ATTACKFLAT:
+                        calculateOtherflat[1] = calculateOtherflat[0] + _g.modifiers[1];
+                        break;
+                    case StatBooster.DEFFLAT:
+
+                        break;
+                    case StatBooster.MAJFLAT:
+
+                        break;
+                    case StatBooster.MAJDEFFLAT:
+
+                        break;
+                     case StatBooster.HPPERCENT:
+                        calculatePercent[0] = calculatePercent[0] + _g.modifiers[i]
+                        break;
+                    case StatBooster.ATTACKPERCENT:
+
+                        break;
+                    case StatBooster.DEFPERCENT:
+
+                        break;
+                    case StatBooster.MAJPERCENT:
+
+                        break;
+                    case StatBooster.MAJDEFPERCENT:
+
+                        break;
+                    case StatBooster.SPEED:
+
+                        break:
+                    case StatBooster.ACC:
+
+                        break;
+                    case StatBooster.RES:
+
+                        break;
+                    default:
+                    break;
+                    }
+                }    
+            }
         }
+
         for (int i = 0; i < baseStats.Length; i++){
         runedStats[i] = Mathf.FloorToInt (((levelHealth + calculateEvenflat[i]) * calculatePercent[i]) + calculateOtherflat[i]);
         }
