@@ -165,7 +165,7 @@ public class BattleManager : MonoBehaviour
         Skill chosen = _curr.skills[_skill - 1];
         foreach(Skillette _s in chosen.skillettes){
             int totalDamage = 0;
-            for(int i = 0; i < 8; i++){
+            for(int i = 0; i < 6; i++){
                 if(i == 0){
                     totalDamage += (int) (_curr.matchStats[i] * _s.damageScaling[i]);
                 }else{
